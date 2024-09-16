@@ -2,16 +2,17 @@
 
 This guide provides detailed steps to install and configure OMOPonFHIR-main-v54-r4 using **Rancher Desktop** (configured as containerd), with a PostgreSQL database for OMOPv5.4 hosted outside of Kubernetes.
 
-## Prerequisites
 
-1.  **Rancher Desktop** with **containerd** configured.
-2.  **PostgreSQL** installed via Docker.
-3.  The following tools installed:
-    -   **kubectl**
-    -   **nerdctl** (for managing containerd containers)
-    -   **git**
+
+
   
 ## Step 1: Rancher Desktop Installation and Configuration
+
+Rancher Desktop is an open-source application that provides all the essentials to setup a local Kubernetes environment for development.
+
+To follow teh next instructions You need to download it from https://github.com/rancher-sandbox/rancher-desktop/releases/download/v1.15.1/Rancher.Desktop-1.15.1.aarch64.dmg and install it on a Mac Computer.
+
+After installtion, and you need to configure 
 
 ## Step 2: Install PostgreSQL for OMOPv5.4
 
@@ -69,7 +70,7 @@ psql -h localhost -U postgres -d omop_v5 -f /path/to/OMOPCDM_postgresql_5.4_ddl.
 
 ```bash
 psql -h localhost -U postgres -d omop_v5 -c "\copy concept FROM 'path_to_CONCEPT.csv' WITH DELIMITER ',' CSV HEADER;"
-psql -h localhost -U postgres -d omop_v5 -c "\copy drug_strength FROM 'path_to_DRUG_STRENGTH.csv' WITH DELIMITER ',' CSV HEADER;"` 
+psql -h localhost -U postgres -d omop_v5 -c "\copy drug_strength FROM 'path_to_DRUG_STRENGTH.csv' WITH DELIMITER ',' CSV HEADER;" 
 ```
 Make sure all required vocabulary files are loaded.
 
@@ -144,74 +145,63 @@ spec:
 
 Apply the service configuration:
 
-bash
-
-`kubectl apply -f omoponfhir-service.yaml` 
+```bash
+kubectl apply -f omoponfhir-service.yaml
+```
 
 ----------
 
-## Step 3: Access OMOPonFHIR and PostgreSQL
+## Step 4: Access OMOPonFHIR and PostgreSQL
 
-### 3.1. Access OMOPonFHIR
+### 4.1. Access OMOPonFHIR
 
 Once OMOPonFHIR is running, you can access the FHIR API at:
 
-bash
-
-Copy code
-
-`http://localhost:30080/fhir/` 
+```bash
+http://localhost:30080/fhir/ 
+```
 
 Test resources like `Observation`, `Patient`, etc. by navigating to:
 
-bash
+```bash
+http://localhost:30080/fhir/Observation
+http://localhost:30080/fhir/Patient
+```
 
-Copy code
-
-`http://localhost:30080/fhir/Observation
-http://localhost:30080/fhir/Patient` 
-
-### 3.2. Access PostgreSQL from Local Machine
+### 4.2. Access PostgreSQL from Local Machine
 
 If `psql` is not installed locally, you can use `nerdctl` to connect to PostgreSQL:
 
 1.  **Connect to PostgreSQL container:**
     
-    bash
-    
-    Copy code
-
-```
-    `nerdctl exec -it omop-postgres psql -U postgres` 
+    ```bash
+    nerdctl exec -it omop-postgres psql -U postgres
     ```
     
 2.  **Run SQL queries directly from within the container:**
     
-    bash
-    
-    Copy code
-    
-    `\c omop_v5
-    SELECT * FROM observation LIMIT 10;` 
+    ```bash
+    \c omop_v5
+    SELECT * FROM observation LIMIT 10;
+    ``` 
     
 
 Alternatively, you can install `psql` locally using **Homebrew**:
 
-bash
-
-
-`brew install libpq
-brew link --force libpq` 
+```bash
+brew install libpq
+brew link --force libpq
+```
 
 Then access PostgreSQL using:
 
-bash
-
-`psql -h localhost -U postgres -d omop_v5` 
+```bash
+psql -h localhost -U postgres -d omop_v5
+```
 
 ----------
 
-## Step 4: Troubleshooting
+## Step 5: Troubleshooting
 
 1.  **OMOPonFHIR Not Accessible:**
     
