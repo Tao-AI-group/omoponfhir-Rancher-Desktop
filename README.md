@@ -8,9 +8,9 @@ This guide provides detailed steps to install and configure OMOPonFHIR-main-v54-
   
 ## Step 1: Rancher Desktop Installation and Configuration
 
-Rancher Desktop is an open-source application that provides all the essentials to setup a local Kubernetes environment for development.
+Rancher Desktop is an open-source application that provides all the essentials to setup a local Kubernetes environment for development. Rancher Desktop can be downloaded from https://rancherdesktop.io/
 
-To follow teh next instructions You need to download it from https://github.com/rancher-sandbox/rancher-desktop/releases/download/v1.15.1/Rancher.Desktop-1.15.1.aarch64.dmg and install it on a Mac Computer.
+To follow the next instructions, I am using this version: https://github.com/rancher-sandbox/rancher-desktop/releases/download/v1.15.1/Rancher.Desktop-1.15.1.aarch64.dmg
 
 After installtion, and you need to configure 
 
