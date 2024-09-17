@@ -117,6 +117,41 @@ psql -h localhost -U postgres -d omop_v5 -c "\copy DOMAIN FROM 'path_to_DOMAIN.c
 ```
 Make sure all required vocabulary files are loaded.
 
+### 2.6. Access and Modify postgresql.conf
+
+#### 2.6.1 Identify Your PostgreSQL Container
+```
+nerdctl ps
+```
+Example output
+```
+CONTAINER ID    IMAGE                                COMMAND                   CREATED        STATUS    PORTS                     NAMES
+fd07a56dfb9d    docker.io/library/postgres:latest    "docker-entrypoint.s…"    4 hours ago    Up        0.0.0.0:5432->5432/tcp    omop-postgres
+```
+#### 2.6.2 Access the PostgreSQL Container Shell
+```
+nerdctl exec -it <container_id_or_name> bash
+```
+#### 2.6.3 Locate and edit the postgresql.conf File
+```
+echo $PGDATA
+```
+
+Install an editor as follows:
+```
+apt-get update && apt-get install -y vim
+```
+```
+vi postgresql.conf
+```
+Make sure listen_addresses = '*' is uncommented
+#### 2.6.4 Edit the pg_hba.conf File
+Add a Host Entry
+```
+host    all             all             0.0.0.0/0               md5
+```
+Note: IP (0.0.0.0/0) is not secure. In a production environment, you should replace this with the specific IP address range of your Kubernetes cluster.
+
 ----------
 
 ## Step 3: Deploy OMOPonFHIR in Kubernetes
@@ -258,6 +293,7 @@ kubectl apply -f omoponfhir-service.yaml
 ```
 
 ----------
+
 
 ## Step 4: Access OMOPonFHIR and PostgreSQL
 
