@@ -88,15 +88,31 @@ You may want to run the same steps for the indices file:  OMOPCDM_postgresql_5.4
 1.  Download vocabularies from [Athena OHDSI](https://athena.ohdsi.org/).
 2.  Load the vocabulary files into the `omop_v5` database.
 
-```bash
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy DRUG_STRENGTH FROM 'path_to_DRUG_STRENGTH.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy CONCEPT FROM 'path_to_CONCEPT.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy CONCEPT_RELATIONSHIP FROM 'path_to_CONCEPT_RELATIONSHIP.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy CONCEPT_ANCESTOR FROM 'path_to_CONCEPT_ANCESTOR.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy CONCEPT_SYNONYM FROM 'path_to_CONCEPT_SYNONYM.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy VOCABULARY FROM 'path_to_VOCABULARY.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy RELATIONSHIP FROM 'path_to_RELATIONSHIP.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy CONCEPT_CLASS FROM 'path_to_CONCEPT_CLASS.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;"
+```
+```
 psql -h localhost -U postgres -d omop_v5 -c "\copy DOMAIN FROM 'path_to_DOMAIN.csv' WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;" 
 ```
 Make sure all required vocabulary files are loaded.
