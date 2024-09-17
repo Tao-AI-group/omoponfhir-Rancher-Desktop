@@ -2,9 +2,6 @@
 
 This guide provides detailed steps to install and configure OMOPonFHIR-main-v54-r4 using **Rancher Desktop** (configured as containerd), with a PostgreSQL database for OMOPv5.4 hosted outside of Kubernetes.
 
-
-
-
   
 ## Step 1: Rancher Desktop Installation and Configuration
 
@@ -58,11 +55,17 @@ git clone https://github.com/OHDSI/CommonDataModel.git
 ```
 Note: The previous command may ask to install developer tools. Install it and re-run the command
 
-Run the DDL scripts to set up the OMOP database schema:
 
-**Install psql Locally Using Homebrew (Recommended for Mac)**:
+
+#### 2.4.1 Install psql Locally Using Homebrew (Recommended for Mac):
 
 If you want to run psql from your Mac’s terminal (outside the container) to interact with the PostgreSQL instance running in the container, you need to install the PostgreSQL client:
+
+```bash
+brew install postgresql
+```
+
+#### 2.4.2 Run the DDL scripts to set up the OMOP database schema:
 
 ```bash
 psql -h localhost -U postgres -d omop_v5 -f /path/to/OMOPCDM_postgresql_5.4_ddl.sql
