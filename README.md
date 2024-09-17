@@ -80,6 +80,7 @@ Note: you may encounter an error, please run the following command, first:
 ```
 sed -i '' 's/@cdmDatabaseSchema/public/g' /path/to/OMOPCDM_postgresql_5.4_ddl.sql
 ```
+You may want to run the same steps for the indices file:  OMOPCDM_postgresql_5.4_indices.sql
 
 
 ### 2.5. Load OMOP Vocabularies
