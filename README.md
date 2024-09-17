@@ -214,8 +214,27 @@ Deploy the OMOPonFHIR application in Kubernetes:
 
 ```bash
 kubectl apply -f omoponfhir-deployment.yaml
-kubectl apply -f omoponfhir-service.yaml
 ```
+
+To check for the image in the k8s.io namespace, run:
+```
+nerdctl -n k8s.io images
+```
+
+If the image is missing from the k8s.io namespace, rebuild the image specifically for that namespace:
+```
+nerdctl -n k8s.io build -t omoponfhir:latest .
+```
+You may reapply the deployment and then run the following to get the pod name and make sure its status is "Running"
+```
+kubectl get pods
+```
+
+to check Pod Events for Errors
+```
+kubectl describe podname
+```
+
 
 ### 3.5. Expose OMOPonFHIR Service
 
