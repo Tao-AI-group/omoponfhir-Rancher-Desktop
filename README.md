@@ -230,10 +230,6 @@ You may reapply the deployment and then run the following to get the pod name an
 kubectl get pods
 ```
 
-to check Pod Events for Errors
-```
-kubectl describe podname
-```
 
 
 ### 3.5. Expose OMOPonFHIR Service
