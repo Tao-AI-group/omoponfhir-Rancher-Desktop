@@ -126,7 +126,7 @@ Make sure all required vocabulary files are loaded.
 Clone the `omoponfhir-main-v54-r4` repository:
 
 ```bash
-git clone https://github.com/omoponfhir/omoponfhir-main-v54-r4.git
+git clone --recurse https://github.com/omoponfhir/omoponfhir-main-v54-r4.git
 cd omoponfhir-main-v54-r4
 ```
 
@@ -137,35 +137,75 @@ Since Rancher Desktop uses containerd, you’ll build the OMOPonFHIR image using
 ```bash
 nerdctl build -t omoponfhir:latest .
 ```
+if you got an error similar to "error: failed to solve: process "/bin/sh -c mvn clean install" did not complete successfully: exit code: 137
+FATA[0249] no image was built  " Increase the virtual machine memory size in Rancher Desktop from 2 GB to 4 GB
 
 ### 3.3. Configure Kubernetes Deployment
 
-Edit the `omoponfhir-deployment.yaml` file to ensure that the environment variables (specifically JDBC connection details) are set properly to connect to your PostgreSQL database running outside Kubernetes:
+#### 3.3.1 Create the YAML files for Kubernetes. 
 
-```yaml
-env:
-- name: JDBC_URL
-  value: "jdbc:postgresql://ip_address:5432/omop_v5"
-- name: JDBC_USERNAME
-  value: "postgres"
-- name: JDBC_PASSWORD
-  value: "put_your_password"
-- name: JDBC_DRIVER
-  value: "org.postgresql.Driver"
-- name: JDBC_DATASOURCENAME
-  value: "org.postgresql.ds.PGSimpleDataSource"
-- name: SERVERBASE_URL
-  value : "http://localhost:8080/fhir"
-- name: JDBC_POOLSIZE
-  value: "10"  # Set the desired pool size
-- name: JDBC_DATA_SCHEMA
-  value: "public"
-- name: JDBC_VOCABS_SCHEMA
-  value: "public"
-- name: AUTH_BEARER
-  value: "12345"
-- name: AUTH_BASIC
-  value: "client:secret"
+This defines the deployment and service configuration for OMOPonFHIR. 
+
+Create a file called omoponfhir-deployment.yaml. Edit the  file to ensure that the environment variables (specifically JDBC connection details) are set properly to connect to your PostgreSQL database running outside Kubernetes:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omoponfhir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: omoponfhir
+  template:
+    metadata:
+      labels:
+        app: omoponfhir
+    spec:**
+      containers:
+      - name: omoponfhir
+        image: omoponfhir:latest
+        imagePullPolicy: Never  # Set to Never to avoid pulling from a registry
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JDBC_URL
+          value: "jdbc:postgresql://10.42.0.1:5432/omop_v5"
+        - name: JDBC_USERNAME
+          value: "postgres"
+        - name: JDBC_PASSWORD
+          value: "mayopassword"
+        - name: JDBC_DRIVER
+          value: "org.postgresql.Driver"
+        - name: JDBC_DATASOURCENAME
+          value: "org.postgresql.ds.PGSimpleDataSource"
+        - name: SERVERBASE_URL
+          value : "http://localhost:8080/fhir"
+        - name: JDBC_POOLSIZE
+          value: "10"  # Set the desired pool size
+        - name: JDBC_DATA_SCHEMA
+          value: "public"
+        - name: JDBC_VOCABS_SCHEMA
+          value: "public"
+        - name: AUTH_BEARER
+          value: "12345"
+        - name: AUTH_BASIC
+          value: "client:secret"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omoponfhir-service
+spec:
+  selector:
+    app: omoponfhir
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    nodePort: 30080
+  type: NodePort
 ```
 
 ### 3.4. Deploy OMOPonFHIR
