@@ -145,7 +145,7 @@ Edit the `omoponfhir-deployment.yaml` file to ensure that the environment variab
 ```yaml
 env:
 - name: JDBC_URL
-  value: "jdbc:postgresql://10.42.0.1:5432/omop_v5"
+  value: "jdbc:postgresql://ip_address:5432/omop_v5"
 - name: JDBC_USERNAME
   value: "postgres"
 - name: JDBC_PASSWORD
