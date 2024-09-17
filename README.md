@@ -28,7 +28,7 @@ nerdctl pull postgres:latest
 Run PostgreSQL using the following command, which will create a new container named `omop-postgres`:
 
 ```
-nerdctl run --name omop-postgres -d -p 5432:5432 -e POSTGRES_PASSWORD="put your password here" postgres:latest
+nerdctl run --name omop-postgres -d -p 5432:5432 -e POSTGRES_PASSWORD=your_password postgres:latest
 ```
 
 ### 2.3. Create OMOP Database
@@ -171,11 +171,11 @@ spec:
         - containerPort: 8080
         env:
         - name: JDBC_URL
-          value: "jdbc:postgresql://10.42.0.1:5432/omop_v5"
+          value: "jdbc:postgresql://ipaddress:5432/omop_v5"
         - name: JDBC_USERNAME
           value: "postgres"
         - name: JDBC_PASSWORD
-          value: "mayopassword"
+          value: "your_password"
         - name: JDBC_DRIVER
           value: "org.postgresql.Driver"
         - name: JDBC_DATASOURCENAME
