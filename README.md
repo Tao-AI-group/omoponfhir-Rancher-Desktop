@@ -60,7 +60,8 @@ Note: The previous command may ask to install developer tools. Install it and re
 
 Run the DDL scripts to set up the OMOP database schema:
 
-**Install psql Locally Using Homebrew (Recommended for Mac)**
+**Install psql Locally Using Homebrew (Recommended for Mac)**:
+
 If you want to run psql from your Mac’s terminal (outside the container) to interact with the PostgreSQL instance running in the container, you need to install the PostgreSQL client:
 
 ```bash
