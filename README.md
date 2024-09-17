@@ -168,8 +168,6 @@ env:
   value: "client:secret"
 ```
 
-Make sure to set the `JDBC_URL` to `host.docker.internal` since PostgreSQL is running on the host machine.
-
 ### 3.4. Deploy OMOPonFHIR
 
 Deploy the OMOPonFHIR application in Kubernetes:
