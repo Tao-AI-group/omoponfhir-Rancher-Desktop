@@ -12,7 +12,7 @@ Rancher Desktop is an open-source application that provides all the essentials t
 
 To follow the next instructions, I am using this version: https://github.com/rancher-sandbox/rancher-desktop/releases/download/v1.15.1/Rancher.Desktop-1.15.1.aarch64.dmg
 
-After installtion, and you need to configure 
+After installation and running Rancher Desktop, make sure that "Enable Kubernetes" is selected, Container Engine: containered and Configure PATH: Automatic are marked.
 
 ## Step 2: Install PostgreSQL for OMOPv5.4
 
