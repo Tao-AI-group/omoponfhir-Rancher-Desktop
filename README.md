@@ -75,6 +75,11 @@ If brew is not installed you can install it using
 ```bash
 psql -h localhost -U postgres -d omop_v5 -f /path/to/OMOPCDM_postgresql_5.4_ddl.sql
 ```
+Note: you may encounter an error, please run the following command, first:
+
+```
+sed -i '' 's/@cdmDatabaseSchema/public/g' /path/to/OMOPCDM_postgresql_5.4_ddl.sql
+```
 
 
 ### 2.5. Load OMOP Vocabularies
