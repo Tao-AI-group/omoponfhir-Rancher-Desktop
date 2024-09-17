@@ -31,14 +31,14 @@ nerdctl pull postgres:latest
 Run PostgreSQL using the following command, which will create a new container named `omop-postgres`:
 
 ```
-nerdctl run --name omop-postgres -d -p 5432:5432 -e POSTGRES_PASSWORD=mayopassword postgres:latest
+nerdctl run --name omop-postgres -d -p 5432:5432 -e POSTGRES_PASSWORD="put your password here" postgres:latest
 ```
 
 ### 2.3. Create OMOP Database
 
 Log in to the PostgreSQL container:
 
-
+ 
 ```
 nerdctl exec -it omop-postgres psql -U postgres 
 ```
@@ -56,12 +56,17 @@ Download the OMOP CDM DDL scripts from [OHDSI CommonDataModel](https://github.co
 ```bash
 git clone https://github.com/OHDSI/CommonDataModel.git
 ```
+Note: The previous command may ask to install developer tools. Install it and re-run the command
 
 Run the DDL scripts to set up the OMOP database schema:
 
+**Install psql Locally Using Homebrew (Recommended for Mac)**
+If you want to run psql from your Mac’s terminal (outside the container) to interact with the PostgreSQL instance running in the container, you need to install the PostgreSQL client:
+
 ```bash
 psql -h localhost -U postgres -d omop_v5 -f /path/to/OMOPCDM_postgresql_5.4_ddl.sql
-``` 
+```
+
 
 ### 2.5. Load OMOP Vocabularies
 
