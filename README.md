@@ -144,16 +144,28 @@ Edit the `omoponfhir-deployment.yaml` file to ensure that the environment variab
 
 ```yaml
 env:
-  - name: JDBC_URL
-    value: jdbc:postgresql://host.docker.internal:5432/omop_v5
-  - name: JDBC_USERNAME
-    value: postgres
-  - name: JDBC_PASSWORD
-    value: mayopassword
-  - name: JDBC_DATA_SCHEMA
-    value: omopv54
-  - name: JDBC_VOCABS_SCHEMA
-    value: vocab
+- name: JDBC_URL
+  value: "jdbc:postgresql://10.42.0.1:5432/omop_v5"
+- name: JDBC_USERNAME
+  value: "postgres"
+- name: JDBC_PASSWORD
+  value: "put_your_password"
+- name: JDBC_DRIVER
+  value: "org.postgresql.Driver"
+- name: JDBC_DATASOURCENAME
+  value: "org.postgresql.ds.PGSimpleDataSource"
+- name: SERVERBASE_URL
+  value : "http://localhost:8080/fhir"
+- name: JDBC_POOLSIZE
+  value: "10"  # Set the desired pool size
+- name: JDBC_DATA_SCHEMA
+  value: "public"
+- name: JDBC_VOCABS_SCHEMA
+  value: "public"
+- name: AUTH_BEARER
+  value: "12345"
+- name: AUTH_BASIC
+  value: "client:secret"
 ```
 
 Make sure to set the `JDBC_URL` to `host.docker.internal` since PostgreSQL is running on the host machine.
