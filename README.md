@@ -64,6 +64,11 @@ If you want to run psql from your Mac’s terminal (outside the container) to in
 ```bash
 brew install postgresql
 ```
+If brew is not installed you can install it using
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 #### 2.4.2 Run the DDL scripts to set up the OMOP database schema:
 
