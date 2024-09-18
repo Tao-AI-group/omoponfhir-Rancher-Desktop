@@ -264,34 +264,6 @@ You may reapply the deployment and then run the following to get the pod name an
 ```
 kubectl get pods
 ```
-
-
-
-### 3.5. Expose OMOPonFHIR Service
-
-Expose the OMOPonFHIR service to be accessible from outside Kubernetes. In the service configuration file (`omoponfhir-service.yaml`), ensure you use a `NodePort` service to expose the service on `localhost:30080`:
-
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: omoponfhir-service
-spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 8080
-    nodePort: 30080
-  selector:
-    app: omoponfhir
-```
-
-Apply the service configuration:
-
-```bash
-kubectl apply -f omoponfhir-service.yaml
-```
-
 ----------
 
 
