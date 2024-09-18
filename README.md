@@ -161,8 +161,8 @@ Note: IP (0.0.0.0/0) is not secure. In a production environment, you should repl
 Clone the `omoponfhir-main-v54-r4` repository:
 
 ```bash
-git clone --recurse https://github.com/omoponfhir/omoponfhir-main-v54-r4.git
-cd omoponfhir-main-v54-r4
+git clone --recurse-submodules https://github.com/mcc-ad/UTH-omoponfhir-main-v54-r4.git
+cd UTH-omoponfhir-main-v54-r4
 ```
 
 ### 3.2. Build OMOPonFHIR Docker Image
