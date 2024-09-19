@@ -151,7 +151,7 @@ Add a Host Entry
 host    all             all             0.0.0.0/0               md5
 ```
 Note: IP (0.0.0.0/0) is not secure. In a production environment, you should replace this with the specific IP address range of your Kubernetes cluster.
-#### 2.6.5 PostgreSQL Service Inside the Container or Restart the Container
+#### 2.6.5 Restart PostgreSQL Service Inside the Container or Restart the Container
 
 ```
 nerdctl restart omop-postgres
