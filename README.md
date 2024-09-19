@@ -202,7 +202,7 @@ spec:
     metadata:
       labels:
         app: omoponfhir
-    spec:**
+    spec:
       containers:
       - name: omoponfhir
         image: omoponfhir:latest
@@ -221,7 +221,7 @@ spec:
         - name: JDBC_DATASOURCENAME
           value: "org.postgresql.ds.PGSimpleDataSource"
         - name: SERVERBASE_URL
-          value : "http://localhost:8080/fhir"
+          value: "http://localhost:8080/fhir"
         - name: JDBC_POOLSIZE
           value: "10"  # Set the desired pool size
         - name: JDBC_DATA_SCHEMA
