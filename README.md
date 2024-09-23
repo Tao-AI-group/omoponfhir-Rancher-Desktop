@@ -28,7 +28,7 @@ nerdctl pull postgres:latest
 Run PostgreSQL using the following command, which will create a new container named `omop-postgres`:
 
 ```
-nerdctl run --name omop-postgres -d -p 5432:5432 -e POSTGRES_PASSWORD=your_password postgres:latest
+nerdctl run --restart=always --name omop-postgres -d -p 5432:5432 -e POSTGRES_PASSWORD=your_password postgres:latest
 ```
 
 ### 2.3. Create OMOP Database
