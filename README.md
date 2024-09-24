@@ -11,6 +11,8 @@ To follow the next instructions, I am using this version: https://github.com/ran
 
 After installation and running Rancher Desktop, make sure that "Enable Kubernetes" is selected, Container Engine: containered and Configure PATH: Automatic are marked.
 
+----------
+
 ## Step 2: Install PostgreSQL for OMOPv5.4
 
 First, set up the PostgreSQL database to host the OMOP Common Data Model (CDM).
@@ -150,7 +152,7 @@ Add a Host Entry
 ```
 host    all             all             0.0.0.0/0               md5
 ```
-Note: IP (0.0.0.0/0) is not secure. In a production environment, you should replace this with the specific IP address range of your Kubernetes cluster.
+**Note: IP (0.0.0.0/0) is not secure. In a production environment, you should replace this with the specific IP address range of your Kubernetes cluster.**
 #### 2.6.5 Restart PostgreSQL Service Inside the Container or Restart the Container
 
 ```
@@ -191,11 +193,21 @@ B.	Make sure to add the following dependencies to it:
 
 Since Rancher Desktop uses containerd, you’ll build the OMOPonFHIR image using `nerdctl`:
 
+If you will run the OMOPonFHIR application inside a container, excecute:
+
 ```bash
 nerdctl build -t omoponfhir:latest .
 ```
-if you got an error similar to "error: failed to solve: process "/bin/sh -c mvn clean install" did not complete successfully: exit code: 137
-FATA[0249] no image was built  " Increase the virtual machine memory size in Rancher Desktop from 2 GB to 4 GB
+**Note: If you got an error similar to "error: failed to solve: process "/bin/sh -c mvn clean install" did not complete successfully: exit code: 137
+FATA[0249] no image was built  ",  increase the virtual machine memory size in Rancher Desktop from 2 GB to 4 GB**
+
+If you will run the OMOPonFHIR application inside a pod managed by kubernetes, execute:
+
+```
+nerdctl -n k8s.io build -t omoponfhir:latest .
+```
+
+**Note: In the following steps I will assume that the OMOPonFHIR application will run as a pod managed by kubernetes**
 
 ### 3.4. Configure Kubernetes Deployment
 
@@ -203,7 +215,7 @@ FATA[0249] no image was built  " Increase the virtual machine memory size in Ran
 
 This defines the deployment and service configuration for OMOPonFHIR. 
 
-Create a file called omoponfhir-deployment.yaml. Edit the  file to ensure that the environment variables (specifically JDBC connection details) are set properly to connect to your PostgreSQL database running outside Kubernetes:
+Create a file called omoponfhir-deployment.yaml. Edit the file to ensure that the environment variables (specifically JDBC connection details) are set properly to connect to your PostgreSQL database:
 
 ```
 apiVersion: apps/v1
@@ -223,7 +235,7 @@ spec:
       containers:
       - name: omoponfhir
         image: omoponfhir:latest
-        imagePullPolicy: Never  # Set to Never to avoid pulling from a registry
+        imagePullPolicy: Never  # Set to Never or IfNotPresent to avoid always pulling from a registry
         ports:
         - containerPort: 8080
         env:
@@ -265,7 +277,7 @@ spec:
   type: NodePort
 ```
 
-### 3.5. Deploy OMOPonFHIR
+#### 3.5.1. Deploy OMOPonFHIR
 
 Deploy the OMOPonFHIR application in Kubernetes:
 
@@ -273,16 +285,7 @@ Deploy the OMOPonFHIR application in Kubernetes:
 kubectl apply -f omoponfhir-deployment.yaml
 ```
 
-To check for the image in the k8s.io namespace, run:
-```
-nerdctl -n k8s.io images
-```
-
-If the image is missing from the k8s.io namespace, rebuild the image specifically for that namespace:
-```
-nerdctl -n k8s.io build -t omoponfhir:latest .
-```
-You may reapply the deployment and then run the following to get the pod name and make sure its status is "Running"
+You may run the following to get the pod name and make sure its status is "Running"
 ```
 kubectl get pods
 ```
