@@ -119,9 +119,26 @@ psql -h localhost -U postgres -d omop_v5 -c "\copy DOMAIN FROM 'path_to_DOMAIN.c
 ```
 Make sure all required vocabulary files are loaded.
 
-### 2.6. Access and Modify postgresql.conf
+### 2.6. Access PostgreSQL from the container
 
-#### 2.6.1. Identify Your PostgreSQL Container
+You can use `nerdctl` to connect to PostgreSQL:
+
+1.  **Connect to PostgreSQL container:**
+    
+    ```bash
+    nerdctl exec -it omop-postgres psql -U postgres
+    ```
+    
+2.  **Run SQL queries directly from within the container:**
+    
+    ```bash
+    \c omop_v5
+    SELECT * FROM observation LIMIT 10;
+    ``` 
+
+### 2.7. Access and Modify postgresql.conf
+
+#### 2.7.1. Identify Your PostgreSQL Container
 ```
 nerdctl ps
 ```
@@ -130,11 +147,11 @@ Example output
 CONTAINER ID    IMAGE                                COMMAND                   CREATED        STATUS    PORTS                     NAMES
 fd07a56dfb9d    docker.io/library/postgres:latest    "docker-entrypoint.s…"    4 hours ago    Up        0.0.0.0:5432->5432/tcp    omop-postgres
 ```
-#### 2.6.2. Access the PostgreSQL Container Shell
+#### 2.7.2. Access the PostgreSQL Container Shell
 ```
 nerdctl exec -it <container_id_or_name> bash
 ```
-#### 2.6.3. Locate and edit the postgresql.conf File
+#### 2.7.3. Locate and edit the postgresql.conf File
 ```
 echo $PGDATA
 ```
@@ -147,14 +164,14 @@ apt-get update && apt-get install -y vim
 vi postgresql.conf
 ```
 Make sure listen_addresses = '*' is uncommented
-#### 2.6.4. Edit the pg_hba.conf File
+#### 2.7.4. Edit the pg_hba.conf File
 Add a Host Entry
 ```
 host    all             all             0.0.0.0/0               md5
 ```
 **Note: IP (0.0.0.0/0) is not secure. In a production environment, you should replace this with the specific IP address range of your Kubernetes cluster.**
 
-#### 2.6.5. Restart PostgreSQL Service Inside the Container or Restart the Container
+#### 2.7.5. Restart PostgreSQL Service Inside the Container or Restart the Container
 
 ```
 nerdctl restart omop-postgres
@@ -245,7 +262,7 @@ spec:
         - name: JDBC_USERNAME
           value: "postgres"
         - name: JDBC_PASSWORD
-          value: "your_password"
+          value: "your_password"    # This should match the database password 
         - name: JDBC_DRIVER
           value: "org.postgresql.Driver"
         - name: JDBC_DATASOURCENAME
@@ -300,46 +317,15 @@ kubectl get pods
 Once OMOPonFHIR is running, you can access the FHIR API at:
 
 ```bash
-http://localhost:30080/fhir/ 
+http://localhost:30080
 ```
 
-Test resources like `Observation`, `Patient`, etc. by navigating to:
+Test resources like 'CodeSystem', 'Observation', 'Patient, etc. by navigating to:
 
 ```bash
-http://localhost:30080/fhir/Observation
-http://localhost:30080/fhir/Patient
+http://localhost:30080/fhir/CodeSystem
 ```
-
-### 4.2. Access PostgreSQL from Local Machine
-
-If `psql` is not installed locally, you can use `nerdctl` to connect to PostgreSQL:
-
-1.  **Connect to PostgreSQL container:**
-    
-    ```bash
-    nerdctl exec -it omop-postgres psql -U postgres
-    ```
-    
-2.  **Run SQL queries directly from within the container:**
-    
-    ```bash
-    \c omop_v5
-    SELECT * FROM observation LIMIT 10;
-    ``` 
-    
-
-Alternatively, you can install `psql` locally using **Homebrew**:
-
-```bash
-brew install libpq
-brew link --force libpq
-```
-
-Then access PostgreSQL using:
-
-```bash
-psql -h localhost -U postgres -d omop_v5
-```
+**Note: When prompted for a username and password, you can test using client/secret as configured in the .yaml file**
 
 ----------
 
