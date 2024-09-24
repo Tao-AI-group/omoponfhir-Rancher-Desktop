@@ -59,7 +59,7 @@ Note: The previous command may ask to install developer tools. Install it and re
 
 
 
-#### 2.4.1 Install psql Locally Using Homebrew (Recommended for Mac):
+#### 2.4.1. Install psql Locally Using Homebrew (Recommended for Mac):
 
 If you want to run psql from your Mac’s terminal (outside the container) to interact with the PostgreSQL instance running in the container, you need to install the PostgreSQL client:
 
@@ -72,7 +72,7 @@ If brew is not installed you can install it using
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-#### 2.4.2 Run the DDL scripts to set up the OMOP database schema:
+#### 2.4.2. Run the DDL scripts to set up the OMOP database schema:
 
 ```bash
 psql -h localhost -U postgres -d omop_v5 -f /path/to/OMOPCDM_postgresql_5.4_ddl.sql
@@ -121,7 +121,7 @@ Make sure all required vocabulary files are loaded.
 
 ### 2.6. Access and Modify postgresql.conf
 
-#### 2.6.1 Identify Your PostgreSQL Container
+#### 2.6.1. Identify Your PostgreSQL Container
 ```
 nerdctl ps
 ```
@@ -130,11 +130,11 @@ Example output
 CONTAINER ID    IMAGE                                COMMAND                   CREATED        STATUS    PORTS                     NAMES
 fd07a56dfb9d    docker.io/library/postgres:latest    "docker-entrypoint.s…"    4 hours ago    Up        0.0.0.0:5432->5432/tcp    omop-postgres
 ```
-#### 2.6.2 Access the PostgreSQL Container Shell
+#### 2.6.2. Access the PostgreSQL Container Shell
 ```
 nerdctl exec -it <container_id_or_name> bash
 ```
-#### 2.6.3 Locate and edit the postgresql.conf File
+#### 2.6.3. Locate and edit the postgresql.conf File
 ```
 echo $PGDATA
 ```
@@ -147,13 +147,14 @@ apt-get update && apt-get install -y vim
 vi postgresql.conf
 ```
 Make sure listen_addresses = '*' is uncommented
-#### 2.6.4 Edit the pg_hba.conf File
+#### 2.6.4. Edit the pg_hba.conf File
 Add a Host Entry
 ```
 host    all             all             0.0.0.0/0               md5
 ```
 **Note: IP (0.0.0.0/0) is not secure. In a production environment, you should replace this with the specific IP address range of your Kubernetes cluster.**
-#### 2.6.5 Restart PostgreSQL Service Inside the Container or Restart the Container
+
+#### 2.6.5. Restart PostgreSQL Service Inside the Container or Restart the Container
 
 ```
 nerdctl restart omop-postgres
@@ -211,7 +212,7 @@ nerdctl -n k8s.io build -t omoponfhir:latest .
 
 ### 3.4. Configure Kubernetes Deployment
 
-#### 3.4.1 Create the YAML files for Kubernetes. 
+#### 3.4.1. Create the YAML files for Kubernetes. 
 
 This defines the deployment and service configuration for OMOPonFHIR. 
 
