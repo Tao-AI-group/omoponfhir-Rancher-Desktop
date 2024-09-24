@@ -170,6 +170,23 @@ git clone --recurse-submodules https://github.com/mcc-ad/UTH-omoponfhir-main-v54
 cd UTH-omoponfhir-main-v54-r4
 ```
 
+### 3.2. Update pom.xml:
+
+A.	Go inside the omoponfhir-r4-server sub-folder and edit the POM.xml file
+B.	Make sure to add the following dependencies to it:
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+		<dependency>
+    	<groupId>org.apache.logging.log4j</groupId>
+    	<artifactId>log4j-core</artifactId>
+    	<version>2.8.2</version>
+    </dependency>
+
+
 ### 3.2. Build OMOPonFHIR Docker Image
 
 Since Rancher Desktop uses containerd, you’ll build the OMOPonFHIR image using `nerdctl`:
