@@ -173,21 +173,21 @@ cd UTH-omoponfhir-main-v54-r4
 ### 3.2. Update pom.xml:
 
 A.	Go inside the omoponfhir-r4-server sub-folder and edit the POM.xml file
-B.	Make sure to add the following dependencies to it:
 
+B.	Make sure to add the following dependencies to it:
+```
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.8.2</version>
 		</dependency>
 		<dependency>
-    	<groupId>org.apache.logging.log4j</groupId>
-    	<artifactId>log4j-core</artifactId>
-    	<version>2.8.2</version>
-    </dependency>
-
-
-### 3.2. Build OMOPonFHIR Docker Image
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+```
+### 3.3. Build OMOPonFHIR Docker Image
 
 Since Rancher Desktop uses containerd, you’ll build the OMOPonFHIR image using `nerdctl`:
 
@@ -197,9 +197,9 @@ nerdctl build -t omoponfhir:latest .
 if you got an error similar to "error: failed to solve: process "/bin/sh -c mvn clean install" did not complete successfully: exit code: 137
 FATA[0249] no image was built  " Increase the virtual machine memory size in Rancher Desktop from 2 GB to 4 GB
 
-### 3.3. Configure Kubernetes Deployment
+### 3.4. Configure Kubernetes Deployment
 
-#### 3.3.1 Create the YAML files for Kubernetes. 
+#### 3.4.1 Create the YAML files for Kubernetes. 
 
 This defines the deployment and service configuration for OMOPonFHIR. 
 
@@ -265,7 +265,7 @@ spec:
   type: NodePort
 ```
 
-### 3.4. Deploy OMOPonFHIR
+### 3.5. Deploy OMOPonFHIR
 
 Deploy the OMOPonFHIR application in Kubernetes:
 
