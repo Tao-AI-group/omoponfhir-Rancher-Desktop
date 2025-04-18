@@ -133,7 +133,7 @@ You can use `nerdctl` to connect to PostgreSQL:
     
     ```bash
     \c omop_v5
-    SELECT * FROM observation LIMIT 10;
+    SELECT * FROM vocabulary LIMIT 10;
     ``` 
 
 ### 2.7. Access and Modify postgresql.conf
