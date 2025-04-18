@@ -161,6 +161,7 @@ Install an editor as follows:
 apt-get update && apt-get install -y vim
 ```
 ```
+cd $PGDATA
 vi postgresql.conf
 ```
 Make sure listen_addresses = '*' is uncommented
