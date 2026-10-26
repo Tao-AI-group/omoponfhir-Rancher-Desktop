@@ -1,0 +1,11 @@
+# Passwords and tokens (Part A Step 2.2, Part B Step 4.1)
+.env
+*.env
+!*.env.example
+
+# Vocabulary downloads and clinical data (Part A Steps 6 and 7)
+*.zip
+*.csv
+
+# macOS
+.DS_Store
